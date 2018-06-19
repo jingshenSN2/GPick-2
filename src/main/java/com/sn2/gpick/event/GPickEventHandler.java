@@ -8,6 +8,7 @@ import com.mojang.realmsclient.dto.BackupList;
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.item.TrunkGPick;
 import com.sn2.gpick.item.branch.AdvancedFire;
+import com.sn2.gpick.item.branch.AdvancedStoneAnger;
 import com.sn2.gpick.item.branch.Fire;
 import com.sn2.gpick.item.branch.StoneAnger;
 import com.sn2.gpick.manager.ItemManager;
@@ -176,6 +177,21 @@ public class GPickEventHandler {
 		}
 	}
 
+	/**
+	 * branch event for advanced stone anger fired when mine a block, eat the drops
+	 * 
+	 * @param event
+	 */
+	@SubscribeEvent
+	public static void AdvancedStoneAngerMineAndEatStone(HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		if (player != null) {
+			ItemStack hand = player.getHeldItemMainhand();
+			if (hand.getItem() instanceof AdvancedStoneAnger)
+				event.setDropChance(0.1F);
+		}
+	}
+	
 	/**
 	 * branch event for glass fired when mine a glass block, silk touch
 	 * 

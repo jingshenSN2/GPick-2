@@ -6,8 +6,10 @@ import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.item.BranchGPick;
+import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +22,7 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class HeartStone extends BranchGPick {
@@ -30,8 +33,21 @@ public class HeartStone extends BranchGPick {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (worldIn != null)
+		if (worldIn != null) {
 			tooltip.add(GPick.POS + getPos(stack));
+		}
+	}
+	
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
+			EntityLivingBase entityLiving) {
+		if (stack.getItemDamage() == stack.getMaxDamage()) {
+			entityLiving.renderBrokenItemStack(stack);
+			stack.shrink(1);
+			((EntityPlayer) entityLiving).setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.trunkIronCore));
+		} else
+			super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+		return true;
 	}
 	
 	@Override
@@ -41,6 +57,7 @@ public class HeartStone extends BranchGPick {
 		compound.setDouble("homeX", playerIn.posX);
 		compound.setDouble("homeY", playerIn.posY);
 		compound.setDouble("homeZ", playerIn.posZ);
+		compound.setInteger("dimension", playerIn.dimension);
 		stack.setTagCompound(compound);
     }
 	
@@ -57,11 +74,22 @@ public class HeartStone extends BranchGPick {
 		}
 	}
 	
+	public int getWorld(ItemStack stack) {
+		NBTTagCompound compound = stack.getTagCompound();
+		if (compound != null) {
+			int world = compound.getInteger("dimension");
+			return world;
+		}
+		else {
+			return 0;
+		}
+	}
+	
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entityLiving;
-			if (!player.isSneaking()) {
+			if (!player.isSneaking() && (player.dimension == getWorld(stack))) {
 				NBTTagCompound compound = stack.getTagCompound();
 				double x = compound.getDouble("homeX");
 				double y = compound.getDouble("homeY");
@@ -73,13 +101,22 @@ public class HeartStone extends BranchGPick {
 				compound.setDouble("homeX", x1);
 				compound.setDouble("homeY", y1);
 				compound.setDouble("homeZ", z1);
-				stack.damageItem(50, player);
+				if (stack.getMaxDamage() - stack.getItemDamage() < 50) {
+					entityLiving.renderBrokenItemStack(stack);
+					stack.shrink(1);
+					((EntityPlayer) entityLiving).setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.trunkDiamondCore));
+				} else
+					stack.damageItem(50, player);
 			}
-			else {
+			else if (player.dimension != getWorld(stack)) {
+				// TODO send message
+			}
+			else if (player.isSneaking()) {
 				NBTTagCompound compound = new NBTTagCompound();
 				compound.setDouble("homeX", player.posX);
 				compound.setDouble("homeY", player.posY);
 				compound.setDouble("homeZ", player.posZ);
+				compound.setInteger("dimension", player.dimension);
 				stack.setTagCompound(compound);
 			}
 		}

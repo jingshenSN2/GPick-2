@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.item.BranchGPick;
+import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.state.IBlockState;
@@ -40,6 +41,18 @@ public class AdvancedFire extends BranchGPick {
 		tooltip.add(GPick.FLUE + getFuel(stack) + " / " + maxAdFuel);
 	}
 
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
+			EntityLivingBase entityLiving) {
+		if (stack.getItemDamage() == stack.getMaxDamage()) {
+			entityLiving.renderBrokenItemStack(stack);
+			stack.shrink(1);
+			((EntityPlayer) entityLiving).setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.trunkDiamondCore));
+		} else
+			super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+		return true;
+	}
+	
 	public int getFuel(ItemStack stack) {
 		NBTTagCompound compound = stack.getTagCompound();
 		if (compound != null)

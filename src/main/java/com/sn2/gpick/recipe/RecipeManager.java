@@ -51,12 +51,16 @@ public class RecipeManager {
 	}
 
 	public static void addRecipe(String name, Item out, Object item, Object block, Item in) {
-		GameRegistry.addShapedRecipe(new ResourceLocation(GPick.MODID, name), group, new ItemStack(out), "AAA", " B ",
+		GameRegistry.addShapedRecipe(new ResourceLocation(GPick.MODID, name), group, new ItemStack(out), 
+				"AAA",
+				" B ",
 				" C ", 'C', item, 'A', block, 'B', in);
 	}
 
 	public static void addRecipe(String name, ItemStack out, Object item, Object block, Item in) {
-		GameRegistry.addShapedRecipe(new ResourceLocation(GPick.MODID, name), group, out, "AAA", " B ",
+		GameRegistry.addShapedRecipe(new ResourceLocation(GPick.MODID, name), group, out, 
+				"AAA", 
+				" B ",
 				" C ", 'C', item, 'A', block, 'B', in);
 	}
 }
