@@ -1,0 +1,26 @@
+﻿#Item
+item.gpick(wood).name=原木·镐
+item.gpick(stone).name=砾石·镐
+item.gpick(iron).name=锻铁·镐
+item.gpick(gold).name=振金·镐
+item.gpick(diamond).name=钻石·镐
+item.gpick(fire).name=炽炎·镐
+item.gpick(advanced fire).name=阳焱·镐
+item.gpick(only for stone).name=岩怒·镐
+item.gpick(reverse).name=逆变·镐
+item.gpick(glass).name=玻璃·镐
+item.gpick(vein).name=矿脉·镐
+item.gpick(reach).name=长臂·镐
+item.gpick(jump).name=跳跃·镐
+item.gpick(fly).name=飞天·镐
+item.gpick(heartstone).name=炉石·镐
+item.core(wood).name=原木·核心
+item.core(stone).name=砾石·核心
+item.core(iron).name=锻铁·核心
+item.core(gold).name=振金·核心
+item.core(diamond).name=钻石·核心
+item.core(fire).name=炽炎·核心
+
+itemGroup.gpickbranch=进化镐：支线
+itemGroup.gpicktrunk=进化镐：主线
+itemGroup.gpickcore=进化镐：进化核心
