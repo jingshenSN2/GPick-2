@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
+import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
@@ -35,7 +36,7 @@ public class HeartStone extends BranchGPick {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (worldIn != null) {
-			tooltip.add(GPick.POS + getPos(stack));
+			tooltip.add(GPickWords.POS() + getPos(stack));
 		}
 	}
 	
@@ -68,10 +69,10 @@ public class HeartStone extends BranchGPick {
 			double x = compound.getDouble("homeX");
 			double y = compound.getDouble("homeY");
 			double z = compound.getDouble("homeZ");
-			return (int)x + "/" + (int)y + "/" + (int)y;
+			return (int)x + GPickWords.POSSPLITER() + (int)y + GPickWords.POSSPLITER() + (int)y;
 		}
 		else {
-			return "NaN/NaN/NaN";
+			return "NaN" + GPickWords.POSSPLITER() + "NaN" + GPickWords.POSSPLITER() + "NaN";
 		}
 	}
 	
@@ -118,7 +119,7 @@ public class HeartStone extends BranchGPick {
 					stack.damageItem(damage, player);
 			} else if (player.dimension != getWorld(stack)) {
 				player.sendMessage(
-						new TextComponentString(GPick.NAME + ": in wrong dimension, fail to transport."));
+						new TextComponentString(GPickWords.NAME() + "in wrong dimension, fail to transport."));
 			}
 		}
 		return stack;

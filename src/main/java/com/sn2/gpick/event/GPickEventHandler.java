@@ -9,6 +9,7 @@ import java.util.Random;
 
 import com.mojang.realmsclient.dto.BackupList;
 import com.sn2.gpick.GPick;
+import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.item.TrunkGPick;
 import com.sn2.gpick.item.branch.AdvancedFire;
 import com.sn2.gpick.item.branch.AdvancedStoneAnger;
@@ -90,7 +91,7 @@ public class GPickEventHandler {
 			in = new BufferedReader(new InputStreamReader(updateURL.openStream()));
 			version = in.readLine();
 		} catch (Exception e) {
-			player.sendMessage(new TextComponentString(GPick.NAME + ": update check failed."));
+			player.sendMessage(new TextComponentString(GPickWords.NAME() + GPickWords.FAIL()));
 		} finally {
 			if (in != null) {
 				try {
@@ -101,7 +102,7 @@ public class GPickEventHandler {
 		}
 		if (!version.equals(GPick.VERSION)) {
 			player.sendMessage(
-					new TextComponentString(GPick.NAME + ": new version " + version + " is available."));
+					new TextComponentString(GPickWords.NAME() + GPickWords.NEW1() + version + GPickWords.NEW2()));
 		} 
 	}
 

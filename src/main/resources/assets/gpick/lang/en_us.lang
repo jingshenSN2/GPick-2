@@ -24,3 +24,15 @@ item.core(fire).name=fire core
 itemGroup.gpickbranch=Growable Pickaxes - Branch
 itemGroup.gpicktrunk=Growable Pickaxes - Trunk
 itemGroup.gpickcore=Growable Pickaxes - Evolution Core
+
+gpick.minesoul.name=MineSoul: 
+gpick.fuel.name=Fuel:
+gpick.position.name=Last Position: 
+gpick.speaker.name=[GPICK2] 
+gpick.update.fail=Fail to check update.
+gpick.update.new1=New version 
+gpick.update.new2= is available.
+gpick.position.spliter=/
+gpick.core.info1=Get from a 
+gpick.core.info2=.
+

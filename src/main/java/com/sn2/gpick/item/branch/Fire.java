@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
+import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.material.MaterialManager;
 
@@ -36,7 +37,7 @@ public class Fire extends BranchGPick {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(GPick.FLUE + getFuel(stack) + " / " + maxFuel);
+		tooltip.add(GPickWords.FLUE() + getFuel(stack) + " / " + maxFuel);
 	}
 
 	public int getFuel(ItemStack stack) {

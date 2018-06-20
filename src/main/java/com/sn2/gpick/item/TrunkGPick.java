@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
+import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.creative.CreativeTrunk;
 import com.sn2.gpick.manager.ItemManager;
 
@@ -59,7 +60,7 @@ public class TrunkGPick extends ItemPickaxe {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (worldIn != null)
-			tooltip.add(GPick.MINECOUNT + getMineCount(stack) + " / " + max);
+			tooltip.add(GPickWords.MINECOUNT() + getMineCount(stack) + " / " + max);
 	}
 
 	private int getMineCount(ItemStack stack) {

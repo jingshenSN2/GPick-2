@@ -24,3 +24,14 @@ item.core(fire).name=炽炎·核心
 itemGroup.gpickbranch=进化镐：支线
 itemGroup.gpicktrunk=进化镐：主线
 itemGroup.gpickcore=进化镐：进化核心
+
+gpick.minesoul.name=矿魂： 
+gpick.fuel.name=燃料： 
+gpick.position.name=上次位置： 
+gpick.speaker.name=【GPICK2】 
+gpick.update.fail=检查更新失败，请检查网络连接。
+gpick.update.new1=新版本 
+gpick.update.new2=可用。
+gpick.position.spliter=/
+gpick.core.info1=由
+gpick.core.info2=得到。
