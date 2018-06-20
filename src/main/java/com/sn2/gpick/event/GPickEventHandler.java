@@ -1,5 +1,8 @@
 package com.sn2.gpick.event;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +17,7 @@ import com.sn2.gpick.item.branch.StoneAnger;
 import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.recipe.RecipeManager;
 
+import ca.weblite.objc.Client;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
@@ -38,6 +42,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
@@ -57,6 +62,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import scala.reflect.internal.Trees.New;
@@ -70,6 +77,32 @@ public class GPickEventHandler {
 
 	public static void init() {
 		EVENT_BUS.register(GPickEventHandler.class);
+	}
+	
+	@SubscribeEvent
+	public static void checkForUpdates(PlayerLoggedInEvent event) {
+		URL updateURL = null;
+		BufferedReader in = null;
+		String version = "";
+		EntityPlayer player = event.player;
+		try {
+			updateURL = new URL("https://raw.githubusercontent.com/jingshenSN2/GPick-2/master/VERSION.txt");
+			in = new BufferedReader(new InputStreamReader(updateURL.openStream()));
+			version = in.readLine();
+		} catch (Exception e) {
+			player.sendMessage(new TextComponentString(GPick.NAME + ": update check failed."));
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+		if (!version.equals(GPick.VERSION)) {
+			player.sendMessage(
+					new TextComponentString(GPick.NAME + ": new version " + version + " is available."));
+		} 
 	}
 
 	/**
@@ -191,7 +224,7 @@ public class GPickEventHandler {
 				event.setDropChance(0.1F);
 		}
 	}
-	
+
 	/**
 	 * branch event for glass fired when mine a glass block, silk touch
 	 * 

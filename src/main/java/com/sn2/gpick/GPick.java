@@ -16,7 +16,7 @@ import scala.annotation.meta.param;
 public class GPick {
 	public static final String MODID = "gpick";
 	public static final String NAME = "Gpick2";
-	public static final String VERSION = "3.2";
+	public static final String VERSION = "3.2a";
 	public static final String MINECOUNT = "MineSoul: ";
 	public static final String FLUE = "Fuel: ";
 	public static final String POS = "Last position: ";

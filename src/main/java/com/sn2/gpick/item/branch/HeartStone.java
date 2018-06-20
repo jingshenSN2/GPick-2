@@ -23,6 +23,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class HeartStone extends BranchGPick {
@@ -89,7 +90,14 @@ public class HeartStone extends BranchGPick {
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entityLiving;
-			if (!player.isSneaking() && (player.dimension == getWorld(stack))) {
+			if (player.isSneaking()) {
+				NBTTagCompound compound = new NBTTagCompound();
+				compound.setDouble("homeX", player.posX);
+				compound.setDouble("homeY", player.posY);
+				compound.setDouble("homeZ", player.posZ);
+				compound.setInteger("dimension", player.dimension);
+				stack.setTagCompound(compound);
+			} else if (player.dimension == getWorld(stack)) {
 				NBTTagCompound compound = stack.getTagCompound();
 				double x = compound.getDouble("homeX");
 				double y = compound.getDouble("homeY");
@@ -101,23 +109,16 @@ public class HeartStone extends BranchGPick {
 				compound.setDouble("homeX", x1);
 				compound.setDouble("homeY", y1);
 				compound.setDouble("homeZ", z1);
-				if (stack.getMaxDamage() - stack.getItemDamage() < 50) {
+				int damage = (int) Math.sqrt((x - x1)*(x - x1) + (y - y1)*(y - y1) + (z - z1)*(z - z1))/10;
+				if (stack.getMaxDamage() - stack.getItemDamage() < damage) {
 					entityLiving.renderBrokenItemStack(stack);
 					stack.shrink(1);
 					((EntityPlayer) entityLiving).setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.trunkDiamondCore));
 				} else
-					stack.damageItem(50, player);
-			}
-			else if (player.dimension != getWorld(stack)) {
-				// TODO send message
-			}
-			else if (player.isSneaking()) {
-				NBTTagCompound compound = new NBTTagCompound();
-				compound.setDouble("homeX", player.posX);
-				compound.setDouble("homeY", player.posY);
-				compound.setDouble("homeZ", player.posZ);
-				compound.setInteger("dimension", player.dimension);
-				stack.setTagCompound(compound);
+					stack.damageItem(damage, player);
+			} else if (player.dimension != getWorld(stack)) {
+				player.sendMessage(
+						new TextComponentString(GPick.NAME + ": in wrong dimension, fail to transport."));
 			}
 		}
 		return stack;
