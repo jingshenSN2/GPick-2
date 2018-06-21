@@ -1,6 +1,7 @@
 package com.sn2.gpick.recipe;
 
 import com.sn2.gpick.GPick;
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.manager.ItemManager;
 
 import net.minecraft.block.Block;
@@ -37,16 +38,43 @@ public class RecipeManager {
 		addRecipe("trunkGold", ItemManager.trunkGold, Items.STICK, Blocks.GOLD_BLOCK, ItemManager.trunkIronCore);
 		addRecipe("trunkDiamond", ItemManager.trunkDiamond, Items.STICK, Blocks.DIAMOND_BLOCK, ItemManager.trunkGoldCore);
 
-		addRecipe("branchFire", ItemManager.branchFire, Items.FLINT_AND_STEEL, Blocks.COAL_BLOCK,ItemManager.trunkIronCore);
-		addRecipe("branchAdFire", ItemManager.branchAdFire, Items.BLAZE_ROD, Blocks.MAGMA, ItemManager.branchFireCore);
-		addRecipe("branchStoneAnger", stone, Items.GUNPOWDER, Blocks.STONE, ItemManager.trunkIronCore);
-		addRecipe("branchReverse", reverse, Items.STICK, Items.WATER_BUCKET, ItemManager.trunkIronCore);
-		addRecipe("branchGlass", glass, Blocks.GLASS_PANE, Blocks.GLASS, ItemManager.trunkWoodCore);
-		addRecipe("branchVein", ItemManager.branchVein, Blocks.REDSTONE_TORCH, Blocks.REDSTONE_BLOCK, ItemManager.trunkGoldCore);
-		addRecipe("branchReach", ItemManager.branchReach, Blocks.PISTON, Blocks.STICKY_PISTON, ItemManager.trunkGoldCore);
-		addRecipe("branchJump", ItemManager.branchJump, Items.STICK, Blocks.SLIME_BLOCK, ItemManager.trunkGoldCore);
-		addRecipe("branchFly", ItemManager.branchFly, Items.ELYTRA, Items.FEATHER,ItemManager.trunkDiamondCore);
-		addRecipe("branchHeart", ItemManager.branchHeart, Items.COMPASS, Items.ENDER_EYE,ItemManager.trunkIronCore);
+		if (ConfigManager.allowFire) {
+			addRecipe("branchFire", ItemManager.branchFire, Items.FLINT_AND_STEEL, Blocks.COAL_BLOCK,
+					ItemManager.trunkIronCore);
+		}
+		if (ConfigManager.allowAdFire) {
+			addRecipe("branchAdFire", ItemManager.branchAdFire, Items.BLAZE_ROD, Blocks.MAGMA,
+					ItemManager.branchFireCore);
+		}
+		if (ConfigManager.allowStoneAnger) {
+			addRecipe("branchStoneAnger", stone, Items.GUNPOWDER, Blocks.STONE, ItemManager.trunkIronCore);
+		}
+		if (ConfigManager.allowReverse) {
+			addRecipe("branchReverse", reverse, Items.STICK, Items.WATER_BUCKET, ItemManager.trunkIronCore);
+		}
+		if (ConfigManager.allowGlass) {
+			addRecipe("branchGlass", glass, Blocks.GLASS_PANE, Blocks.GLASS, ItemManager.trunkWoodCore);
+		}
+		if (ConfigManager.allowVein) {
+			addRecipe("branchVein", ItemManager.branchVein, Blocks.REDSTONE_TORCH, Blocks.REDSTONE_BLOCK,
+					ItemManager.trunkGoldCore);
+		}
+		if (ConfigManager.allowReach) {
+			addRecipe("branchReach", ItemManager.branchReach, Blocks.PISTON, Blocks.STICKY_PISTON,
+					ItemManager.trunkGoldCore);
+		}
+		if (ConfigManager.allowJump) {
+			addRecipe("branchJump", ItemManager.branchJump, Items.STICK, Blocks.SLIME_BLOCK,
+					ItemManager.trunkGoldCore);
+		}
+		if (ConfigManager.allowFly) {
+			addRecipe("branchFly", ItemManager.branchFly, Items.ELYTRA, Items.FEATHER,
+					ItemManager.trunkDiamondCore);
+		}
+		if (ConfigManager.allowHeart) {
+			addRecipe("branchHeart", ItemManager.branchHeart, Items.COMPASS, Items.ENDER_EYE,
+					ItemManager.trunkIronCore);
+		}
 
 	}
 

@@ -1,0 +1,37 @@
+﻿#Item
+item.gpick(wood).name=原木·鎬
+item.gpick(stone).name=礫石·鎬
+item.gpick(iron).name=鍛鐵·鎬
+item.gpick(gold).name=振金·鎬
+item.gpick(diamond).name=鉆石·鎬
+item.gpick(fire).name=熾炎·鎬
+item.gpick(advanced fire).name=陽火·鎬
+item.gpick(only for stone).name=巖怒·鎬
+item.gpick(reverse).name=逆變·鎬
+item.gpick(glass).name=玻璃·鎬
+item.gpick(vein).name=礦脈·鎬
+item.gpick(reach).name=長臂·鎬
+item.gpick(jump).name=跳躍·鎬
+item.gpick(fly).name=飛天·鎬
+item.gpick(heartstone).name=爐石·鎬
+item.core(wood).name=原木·核心
+item.core(stone).name=礫石·核心
+item.core(iron).name=鍛鐵·核心
+item.core(gold).name=振金·核心
+item.core(diamond).name=鉆石·核心
+item.core(fire).name=熾炎·核心
+
+itemGroup.gpickbranch=進化鎬：支線
+itemGroup.gpicktrunk=進化鎬：主線
+itemGroup.gpickcore=進化鎬：進化核心
+
+gpick.minesoul.name=礦魂： 
+gpick.fuel.name=燃料： 
+gpick.position.name=上次位置： 
+gpick.speaker.name=【GPICK2】 
+gpick.update.fail=檢查更新失敗，請檢查網絡連接。
+gpick.update.new1=新版本 
+gpick.update.new2=可用。
+gpick.position.spliter=/
+gpick.core.info1=由
+gpick.core.info2=得到。

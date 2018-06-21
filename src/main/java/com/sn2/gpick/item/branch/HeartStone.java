@@ -11,6 +11,7 @@ import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

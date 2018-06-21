@@ -5,6 +5,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -44,8 +45,19 @@ public class TrunkGPick extends ItemPickaxe {
 		super(material);
 		this.max = max;
 		this.repairs = repair;
+		this.setNoRepair();
 		this.setCreativeTab(CreativeTrunk.trunk);
 	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
+    {
+		boolean can = super.canApplyAtEnchantingTable(stack, enchantment);
+		ResourceLocation name = enchantment.getRegistryName();
+		if (name.equals(new ResourceLocation("unbreaking"))||name.equals(new ResourceLocation("mending")))
+			can = false;
+        return can;
+    }
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
