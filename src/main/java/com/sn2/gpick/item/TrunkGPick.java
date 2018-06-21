@@ -52,11 +52,11 @@ public class TrunkGPick extends ItemPickaxe {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
     {
-		boolean can = super.canApplyAtEnchantingTable(stack, enchantment);
+		boolean enchantAble = super.canApplyAtEnchantingTable(stack, enchantment);
 		ResourceLocation name = enchantment.getRegistryName();
 		if (name.equals(new ResourceLocation("unbreaking"))||name.equals(new ResourceLocation("mending")))
-			can = false;
-        return can;
+			enchantAble = false;
+        return enchantAble;
     }
 
 	@Override
