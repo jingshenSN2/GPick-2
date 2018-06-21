@@ -16,7 +16,7 @@ import scala.annotation.meta.param;
 public class GPick {
 	public static final String MODID = "gpick";
 	public static final String NAME = "Gpick2";
-	public static final String VERSION = "3.2d";
+	public static final String VERSION = "3.3";
 
 	@SidedProxy(clientSide = "com.sn2.gpick.proxy.ClientProxy", serverSide = "com.sn2.gpick.proxy.CommonProxy")
 	public static CommonProxy proxy;

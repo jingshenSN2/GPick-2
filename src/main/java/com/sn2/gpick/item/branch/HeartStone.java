@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -107,20 +108,32 @@ public class HeartStone extends BranchGPick {
 				double x1 = player.posX;
 				double y1 = player.posY;
 				double z1 = player.posZ;
-				player.setPosition(x, y, z);
+				if (player instanceof EntityPlayerMP)
+                {
+                    ((EntityPlayerMP)player).connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+                }
+                else
+                {
+                    player.setLocationAndAngles(x, y, z, player.rotationYaw, player.rotationPitch);
+                }
 				compound.setDouble("homeX", x1);
 				compound.setDouble("homeY", y1);
 				compound.setDouble("homeZ", z1);
-				int damage = (int) Math.sqrt((x - x1)*(x - x1) + (y - y1)*(y - y1) + (z - z1)*(z - z1))/10;
+				int distance = (int) Math.sqrt((x - x1)*(x - x1) + (y - y1)*(y - y1) + (z - z1)*(z - z1));
+				int damage = distance/10;
+				if (worldIn.isRemote) {
+					player.sendMessage(
+							new TextComponentString(GPickWords.NAME() + GPickWords.TPSUCCES() + distance + GPickWords.UNIT()));
+				}
 				if (stack.getMaxDamage() - stack.getItemDamage() < damage) {
 					entityLiving.renderBrokenItemStack(stack);
 					stack.shrink(1);
 					((EntityPlayer) entityLiving).setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.trunkDiamondCore));
 				} else
 					stack.damageItem(damage, player);
-			} else if (player.dimension != getWorld(stack)) {
+			} else if (player.dimension != getWorld(stack) && worldIn.isRemote) {
 				player.sendMessage(
-						new TextComponentString(GPickWords.NAME() + "in wrong dimension, fail to transport."));
+						new TextComponentString(GPickWords.NAME() + GPickWords.TPFAIL()));
 			}
 		}
 		return stack;

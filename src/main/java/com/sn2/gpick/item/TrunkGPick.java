@@ -32,8 +32,10 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagList;
 
 public class TrunkGPick extends ItemPickaxe {
 
@@ -52,11 +54,11 @@ public class TrunkGPick extends ItemPickaxe {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
     {
-		boolean enchantAble = super.canApplyAtEnchantingTable(stack, enchantment);
-		ResourceLocation name = enchantment.getRegistryName();
-		if (name.equals(new ResourceLocation("unbreaking"))||name.equals(new ResourceLocation("mending")))
-			enchantAble = false;
-        return enchantAble;
+		int id = enchantment.getEnchantmentID(enchantment);
+		if (id == 34 || id == 70)
+			return false;
+		else
+			return super.canApplyAtEnchantingTable(stack, enchantment);
     }
 
 	@Override
