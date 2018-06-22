@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
@@ -157,6 +158,6 @@ public class HeartStone extends BranchGPick {
 
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
-		return 224;
+		return ConfigManager.tpTime * 20;
 	}
 }

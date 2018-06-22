@@ -1,5 +1,6 @@
 package com.sn2.gpick.item.branch;
 
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
@@ -23,7 +24,7 @@ public class Reach extends BranchGPick {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (isSelected)
-			((EntityPlayer) entityIn).getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(25.0D);
+			((EntityPlayer) entityIn).getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(ConfigManager.reachDistance);
 		else
 			((EntityPlayer) entityIn).getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(5.0D);
 	}

@@ -24,6 +24,10 @@ public class ConfigManager {
     public static int fireSmeltChance;
     public static int adFireSmeltChance;
     public static int adFireDoubleChance;
+    public static float stoneAnger;
+    public static int reachDistance;
+    public static int tpTime;
+    public static int veinMax;
     
     
     
@@ -54,11 +58,18 @@ public class ConfigManager {
         allowHeart = config.get(crafting, "heart", true).getBoolean();
         
         String percentage = "percentage";
-        config.setCategoryComment(percentage, "the percentages in this mod");
+        config.setCategoryComment(percentage, "change the percentages in this mod");
         
         fireSmeltChance = config.getInt("fire_smelt", percentage, 9, 0, 20, "the chance of fire gpickaxe smelt a block");
         adFireSmeltChance = config.getInt("adfire_smelt", percentage, 76, 0, 100, "the chance of adfire gpickaxe smelt a block");
         adFireDoubleChance = config.getInt("adfire_double", percentage, 50, 0, 100, "the chance of adfire gpickaxe get double drops");
+        stoneAnger = config.getFloat("stone_drop", percentage, 0.1F, 0, 1.0F, " the drop chance of stone with stoneanger gpickaxe");
+        
+        String data = "parameter";
+        config.setCategoryComment(data, "change the parameters in this mod");
+        reachDistance = config.getInt("reach_distance", data, 25, 6, 30, "player reach distance of reach gpickaxe (unit: block)");
+        tpTime = config.getInt("tp_time", data, 10, 5, 20, "the tp duration of heartstone gpickaxe (unit: second)");
+        veinMax = config.getInt("vein_max", data, 32, 8, 64, "the maxium number of veinmine gpickaxe");
         
         config.save();
         logger.info("Finished loading config. ");

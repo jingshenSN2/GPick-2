@@ -77,7 +77,6 @@ import scala.reflect.internal.Trees.New;
 @EventBusSubscriber(modid = GPick.MODID)
 public class GPickEventHandler {
 	public static final EventBus EVENT_BUS = new EventBus();
-	public static final int veinMax = 64;
 
 	public static void init() {
 		EVENT_BUS.register(GPickEventHandler.class);
@@ -112,6 +111,7 @@ public class GPickEventHandler {
 	/**
 	 * branch event for fire fired when mine a block which can be smelt chance
 	 * equals to ( 0.5 * fortune level + 1 ) * baseFireChance
+	 * EXTREMELY UGLY CODE!!!!!
 	 * 
 	 * @param event
 	 */
@@ -146,6 +146,7 @@ public class GPickEventHandler {
 	/**
 	 * branch event for advanced fire fired when mine a block which can be smelt
 	 * chance equals to advanceFireChance
+	 * ULTIMATELY UGLY CODE!!!!!
 	 * 
 	 * @param event
 	 */
@@ -209,7 +210,7 @@ public class GPickEventHandler {
 		if (player != null) {
 			ItemStack hand = player.getHeldItemMainhand();
 			if (hand.getItem() instanceof StoneAnger)
-				event.setDropChance(0.1F);
+				event.setDropChance(ConfigManager.stoneAnger);
 		}
 	}
 
@@ -268,7 +269,7 @@ public class GPickEventHandler {
 			ItemStack hand = player.getHeldItemMainhand();
 			if (hand.getItem().equals(ItemManager.branchVein)) {
 				Block block = event.getState().getBlock();
-				if (canVeinMine().contains(block)) {
+				if (event.getState().isFullBlock() && !block.equals(Blocks.LIT_REDSTONE_ORE)) {
 					List<BlockPos> minePos = new ArrayList<>();
 					minePos.add(pos);
 					boolean startMine = false;
@@ -283,11 +284,19 @@ public class GPickEventHandler {
 								if (!minePos.contains(testPos)
 										&& world.getBlockState(testPos).getBlock().equals(block)) {
 									minePos.add(testPos);
+									if (minePos.size() >= ConfigManager.veinMax) {
+										startMine = true;
+										break;
+									}
 									newAdd++;
 								}
 							}
+							if (minePos.size() >= ConfigManager.veinMax) {
+								startMine = true;
+								break;
+							}
 						}
-						if (newAdd == 0 || minePos.size() >= veinMax)
+						if (newAdd == 0)
 							startMine = true;
 					}
 					int totalNum = 0;
@@ -302,7 +311,7 @@ public class GPickEventHandler {
 						Random random = new Random();
 						totalNum += tempBlock.quantityDropped(state, fortune, random);
 						totalExp += tempBlock.getExpDrop(state, world, pos, fortune);
-						world.setBlockToAir(pos2);
+						world.destroyBlock(pos2, false);
 					}
 					for (int i = 0; i < totalNum / 64; i++)
 						event.getDrops().add(new ItemStack(drops.getItem(), totalNum, drops.getMetadata()));

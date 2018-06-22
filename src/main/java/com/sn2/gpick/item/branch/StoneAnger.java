@@ -48,22 +48,22 @@ public class StoneAnger extends BranchGPick {
 			float hitY, float hitZ, EnumHand hand) {
 		ItemStack stonePick = player.getHeldItemMainhand();
 		IInventory bag = player.inventory;
-		if (stonePick.getItem().equals(ItemManager.branchStone)) {
-			for (int i = 0; i < bag.getSizeInventory(); i++) {
-				ItemStack torch = bag.getStackInSlot(i);
-				if (torch.getItem().equals(new ItemStack(Blocks.TORCH).getItem())) {
-					if (side.equals(EnumFacing.UP) && world.getBlockState(pos).getBlock().canPlaceTorchOnTop(world.getBlockState(pos), world, pos)) {
-						if (world.getBlockState(pos.up()).getBlock().equals(Blocks.AIR)) {
-							world.setBlockState(pos.up(), Block.getStateById(Block.getIdFromBlock(Blocks.TORCH)));
-							bag.setInventorySlotContents(i, new ItemStack(Blocks.TORCH, torch.getCount() - 1));
-							stonePick.damageItem(1, player);
-							break;
-						}
+		EnumActionResult result = EnumActionResult.PASS;
+		for (int i = 0; i < bag.getSizeInventory(); i++) {
+			ItemStack torch = bag.getStackInSlot(i);
+			if (torch.getItem().equals(new ItemStack(Blocks.TORCH).getItem())) {
+				if (side.equals(EnumFacing.UP) && world.getBlockState(pos).getBlock().canPlaceTorchOnTop(world.getBlockState(pos), world, pos)) {
+					if (world.getBlockState(pos.up()).getBlock().equals(Blocks.AIR)) {
+						world.setBlockState(pos.up(), Block.getStateById(Block.getIdFromBlock(Blocks.TORCH)));
+						bag.setInventorySlotContents(i, new ItemStack(Blocks.TORCH, torch.getCount() - 1));
+						stonePick.damageItem(1, player);
+						result = EnumActionResult.SUCCESS;
+						break;
 					}
 				}
 			}
 		}
-		return EnumActionResult.SUCCESS;
+		return result;
 	}
 
 }
