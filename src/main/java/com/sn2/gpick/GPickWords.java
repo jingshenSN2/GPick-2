@@ -17,5 +17,7 @@ public class GPickWords {
 	public static String NEW2() { return I18n.translateToLocal("gpick.update.new2");}
 	public static String COREINFO1() { return I18n.translateToLocal("gpick.core.info1");}
 	public static String COREINFO2() { return I18n.translateToLocal("gpick.core.info2");}
+	public static String FIRECHANCE() { return I18n.translateToLocal("gpick.fire.chance");}
+	public static String ADFIRECHANCE() { return I18n.translateToLocal("gpick.adfire.chance");}
 	
 }

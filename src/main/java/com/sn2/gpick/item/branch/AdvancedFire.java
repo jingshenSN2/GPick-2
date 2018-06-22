@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
@@ -40,6 +41,8 @@ public class AdvancedFire extends BranchGPick {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(GPickWords.FLUE() + getFuel(stack) + " / " + maxAdFuel);
+		tooltip.add(GPickWords.FIRECHANCE() + ConfigManager.adFireSmeltChance + "%");
+		tooltip.add(GPickWords.ADFIRECHANCE() + ConfigManager.adFireDoubleChance + "%");
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import java.util.Random;
 import com.mojang.realmsclient.dto.BackupList;
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.TrunkGPick;
 import com.sn2.gpick.item.branch.AdvancedFire;
 import com.sn2.gpick.item.branch.AdvancedStoneAnger;
@@ -76,8 +77,6 @@ import scala.reflect.internal.Trees.New;
 @EventBusSubscriber(modid = GPick.MODID)
 public class GPickEventHandler {
 	public static final EventBus EVENT_BUS = new EventBus();
-	public static final int baseFireChance = 9;
-	public static final int advanceFireChance = 74;
 	public static final int veinMax = 64;
 
 	public static void init() {
@@ -130,7 +129,7 @@ public class GPickEventHandler {
 						ItemStack smelt = FurnaceRecipes.instance().getSmeltingResult(event.getDrops().get(i));
 						if (smelt != ItemStack.EMPTY) {
 							double random1 = Math.random();
-							if (random1 < (event.getFortuneLevel() / 2.0 + 1) * baseFireChance / 100.0) {
+							if (random1 < (event.getFortuneLevel() / 2.0 + 1) * ConfigManager.fireSmeltChance / 100.0) {
 								event.getDrops().set(i, smelt);
 								if (hand.getItemDamage() == hand.getMaxDamage())
 									player.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.branchFireCore));
@@ -166,10 +165,9 @@ public class GPickEventHandler {
 						ItemStack smelt = FurnaceRecipes.instance().getSmeltingResult(drop);
 						if (smelt != ItemStack.EMPTY) {
 							double random1 = Math.random();
-							double chance = advanceFireChance / 100.0;
 							int fuel2 = advancedFire.getFuel(hand);
 							if (fuel2 > 0) {
-								if (random1 < chance) {
+								if (random1 < (ConfigManager.adFireSmeltChance / 100.0)) {
 									hand.setTagInfo("fuel", new NBTTagInt(fuel2 - 1));
 									int fuel3 = advancedFire.getFuel(hand);
 									if (fuel3 > 0) {
@@ -181,7 +179,7 @@ public class GPickEventHandler {
 													String name = OreDictionary.getOreName(id);
 													if (name.startsWith("ore")) {
 														double random2 = Math.random();
-														if (random2 < chance) {
+														if (random2 < (ConfigManager.adFireDoubleChance / 100.0)) {
 															event.getDrops().add(new ItemStack(smelt.getItem()));
 															hand.setTagInfo("fuel", new NBTTagInt(fuel3 - 1));
 														}

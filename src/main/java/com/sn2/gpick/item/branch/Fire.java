@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
+import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.material.MaterialManager;
 
@@ -20,6 +21,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -38,8 +40,24 @@ public class Fire extends BranchGPick {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(GPickWords.FLUE() + getFuel(stack) + " / " + maxFuel);
+		tooltip.add(GPickWords.FIRECHANCE() + (getFortuneLevel(stack) / 2.0 + 1) * ConfigManager.fireSmeltChance + "%");
 	}
 
+	public int getFortuneLevel(ItemStack stack) {
+		NBTTagList list = stack.getEnchantmentTagList();
+		int level = 0;
+		if (list.tagCount() == 0) 
+			return 0;
+		else {
+			for (int i = 0; i < list.tagCount(); i++) {
+				if (list.getCompoundTagAt(i).getInteger("id") == 35) {
+					level = list.getCompoundTagAt(i).getInteger("lvl");
+				}
+			}
+			return level;
+		}
+	}
+	
 	public int getFuel(ItemStack stack) {
 		NBTTagCompound compound = stack.getTagCompound();
 		if (compound != null)

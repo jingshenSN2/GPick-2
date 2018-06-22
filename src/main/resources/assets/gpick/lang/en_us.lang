@@ -38,4 +38,6 @@ gpick.update.new2= is available.
 gpick.position.spliter=/
 gpick.core.info1=Get from a 
 gpick.core.info2=.
+gpick.fire.chance=Smelt chance:
+gpick.adfire.chance=Double chance:
 

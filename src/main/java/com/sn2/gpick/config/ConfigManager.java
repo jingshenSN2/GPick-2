@@ -21,6 +21,10 @@ public class ConfigManager {
     public static boolean allowJump;
     public static boolean allowFly;
     public static boolean allowHeart;
+    public static int fireSmeltChance;
+    public static int adFireSmeltChance;
+    public static int adFireDoubleChance;
+    
     
     
     public ConfigManager(FMLPreInitializationEvent event)
@@ -48,6 +52,13 @@ public class ConfigManager {
         allowJump = config.get(crafting, "jump", true).getBoolean();
         allowFly = config.get(crafting, "fly", true).getBoolean();
         allowHeart = config.get(crafting, "heart", true).getBoolean();
+        
+        String percentage = "percentage";
+        config.setCategoryComment(percentage, "the percentages in this mod");
+        
+        fireSmeltChance = config.getInt("fire_smelt", percentage, 9, 0, 20, "the chance of fire gpickaxe smelt a block");
+        adFireSmeltChance = config.getInt("adfire_smelt", percentage, 76, 0, 100, "the chance of adfire gpickaxe smelt a block");
+        adFireDoubleChance = config.getInt("adfire_double", percentage, 50, 0, 100, "the chance of adfire gpickaxe get double drops");
         
         config.save();
         logger.info("Finished loading config. ");
