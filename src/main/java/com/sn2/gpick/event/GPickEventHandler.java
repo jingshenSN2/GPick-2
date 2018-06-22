@@ -30,6 +30,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -43,6 +44,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -135,6 +137,7 @@ public class GPickEventHandler {
 									player.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemManager.branchFireCore));
 								else
 									hand.damageItem(1, player);
+								event.getWorld().playSound(null, player.getPosition(), SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 0.1F, 0.1F);
 							}
 						}
 					}
@@ -169,11 +172,12 @@ public class GPickEventHandler {
 							int fuel2 = advancedFire.getFuel(hand);
 							if (fuel2 > 0) {
 								if (random1 < (ConfigManager.adFireSmeltChance / 100.0)) {
+									event.getWorld().playSound(null, player.getPosition(), SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 0.1F, 0.1F);
 									hand.setTagInfo("fuel", new NBTTagInt(fuel2 - 1));
 									int fuel3 = advancedFire.getFuel(hand);
 									if (fuel3 > 0) {
 										ItemStack blockStack = new ItemStack(block);
-										if (!blockStack.isEmpty()) {
+										if (!block.equals(Blocks.STONE) && !blockStack.isEmpty()) {
 											int[] ids = OreDictionary.getOreIDs(blockStack);
 											if (ids.length != 0) {
 												for (int id : ids) {

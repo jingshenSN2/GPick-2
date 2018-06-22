@@ -18,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,7 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -88,6 +90,7 @@ public class AdvancedFire extends BranchGPick {
 				if (repair.getItem().equals(Items.LAVA_BUCKET)) {
 					stack.setTagInfo("fuel", new NBTTagInt(1000));
 					bag.setInventorySlotContents(i, new ItemStack(Items.BUCKET));
+					worldIn.playSound(null, player.getPosition(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 0.5F);
 					break;
 				}
 			}
