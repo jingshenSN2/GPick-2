@@ -9,7 +9,7 @@ import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
-import com.sn2.gpick.manager.ItemManager;
+import com.sn2.gpick.item.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.state.IBlockState;

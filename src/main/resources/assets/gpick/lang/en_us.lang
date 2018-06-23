@@ -20,6 +20,10 @@ item.core(iron).name=iron core
 item.core(gold).name=gold core
 item.core(diamond).name=diamond core
 item.core(fire).name=fire core
+item.stick(stone).name=stone stick
+item.stick(iron).name=iron stick
+item.stick(gold).name=gold stick
+item.stick(diamond).name=diamond stick
 
 itemGroup.gpickbranch=Growable Pickaxes - Branch
 itemGroup.gpicktrunk=Growable Pickaxes - Trunk
@@ -40,4 +44,4 @@ gpick.core.info1=Get from a
 gpick.core.info2=.
 gpick.fire.chance=Smelt chance:
 gpick.adfire.chance=Double chance:
-
+gpick.sethome.text=Successfully set home.

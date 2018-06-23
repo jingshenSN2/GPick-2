@@ -20,6 +20,10 @@ item.core(iron).name=鍛鐵·核心
 item.core(gold).name=振金·核心
 item.core(diamond).name=鉆石·核心
 item.core(fire).name=熾炎·核心
+item.stick(stone).name=石棍
+item.stick(iron).name=鐵棍
+item.stick(gold).name=金棍
+item.stick(diamond).name=鉆石棍
 
 itemGroup.gpickbranch=進化鎬：支線
 itemGroup.gpicktrunk=進化鎬：主線
@@ -40,3 +44,4 @@ gpick.core.info1=由
 gpick.core.info2=得到。
 gpick.fire.chance=熔煉幾率:
 gpick.adfire.chance=雙倍幾率:
+gpick.sethome.text=已設置家。

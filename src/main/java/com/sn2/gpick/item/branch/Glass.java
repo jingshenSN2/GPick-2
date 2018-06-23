@@ -1,7 +1,7 @@
 package com.sn2.gpick.item.branch;
 
 import com.sn2.gpick.item.BranchGPick;
-import com.sn2.gpick.manager.ItemManager;
+import com.sn2.gpick.item.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.Block;

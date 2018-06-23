@@ -17,7 +17,6 @@ import javax.annotation.Nullable;
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.creative.CreativeTrunk;
-import com.sn2.gpick.manager.ItemManager;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

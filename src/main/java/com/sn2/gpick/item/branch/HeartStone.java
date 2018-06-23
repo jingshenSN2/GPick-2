@@ -8,7 +8,7 @@ import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.config.ConfigManager;
 import com.sn2.gpick.item.BranchGPick;
-import com.sn2.gpick.manager.ItemManager;
+import com.sn2.gpick.item.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.state.IBlockState;
@@ -26,6 +26,7 @@ import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -93,14 +94,7 @@ public class HeartStone extends BranchGPick {
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entityLiving;
-			if (player.isSneaking()) {
-				NBTTagCompound compound = new NBTTagCompound();
-				compound.setDouble("homeX", player.posX);
-				compound.setDouble("homeY", player.posY);
-				compound.setDouble("homeZ", player.posZ);
-				compound.setInteger("dimension", player.dimension);
-				stack.setTagCompound(compound);
-			} else if (player.dimension == getWorld(stack)) {
+			if (player.dimension == getWorld(stack)) {
 				NBTTagCompound compound = stack.getTagCompound();
 				double x = compound.getDouble("homeX");
 				double y = compound.getDouble("homeY");
@@ -113,8 +107,8 @@ public class HeartStone extends BranchGPick {
 							player.rotationPitch);
 				} else {
 					player.setLocationAndAngles(x, y, z, player.rotationYaw, player.rotationPitch);
-					worldIn.playSound(null, player.getPosition(), SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.5F, 0.5F);
 				}
+				worldIn.playSound(null, player.getPosition(), SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.5F, 0.5F);
 				compound.setDouble("homeX", x1);
 				compound.setDouble("homeY", y1);
 				compound.setDouble("homeZ", z1);
@@ -139,10 +133,28 @@ public class HeartStone extends BranchGPick {
 	}
 
 	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+		if (player.isSneaking()) {
+			ItemStack pick = player.getHeldItemMainhand();
+			NBTTagCompound compound = new NBTTagCompound();
+			compound.setDouble("homeX", player.posX);
+			compound.setDouble("homeY", player.posY);
+			compound.setDouble("homeZ", player.posZ);
+			compound.setInteger("dimension", player.dimension);
+			pick.setTagCompound(compound);
+			if (worldIn.isRemote)
+				player.sendMessage(new TextComponentString(GPickWords.NAME() + GPickWords.SETHOME()));
+		}
+        return EnumActionResult.PASS;
+    }
+	
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack itemstack = playerIn.getHeldItem(handIn);
 		if (!getPos(itemstack).equals("NaN/NaN/NaN")) {
 			playerIn.setActiveHand(handIn);
+			worldIn.playSound(null, playerIn.getPosition(), SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.NEUTRAL, 0.5F, 0.5F);
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 		} else {
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);

@@ -1,7 +1,7 @@
 package com.sn2.gpick.item.trunk;
 
+import com.sn2.gpick.item.ItemManager;
 import com.sn2.gpick.item.TrunkGPick;
-import com.sn2.gpick.manager.ItemManager;
 import com.sn2.gpick.material.MaterialManager;
 
 import net.minecraft.block.state.IBlockState;

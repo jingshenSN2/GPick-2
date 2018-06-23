@@ -1,6 +1,6 @@
 package com.sn2.gpick.proxy;
 
-import com.sn2.gpick.manager.ItemManager;
+import com.sn2.gpick.item.ItemManager;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
