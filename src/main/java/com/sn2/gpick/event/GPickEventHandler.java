@@ -47,6 +47,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -107,6 +108,7 @@ public class GPickEventHandler {
 			player.sendMessage(
 					new TextComponentString(GPickWords.NAME() + GPickWords.NEW1() + version + GPickWords.NEW2()));
 		} 
+		player.sendMessage(new TextComponentString(GPickWords.NAME() + GPickWords.THANK()));
 	}
 
 	/**
@@ -333,18 +335,23 @@ public class GPickEventHandler {
 			}
 		}
 	}
-	
-	public static List<Block> canVeinMine() {
-		List<Block> blocks = new ArrayList<>();
-		blocks.add(Blocks.COAL_ORE);
-		blocks.add(Blocks.DIAMOND_ORE);
-		blocks.add(Blocks.EMERALD_ORE);
-		blocks.add(Blocks.GOLD_ORE);
-		blocks.add(Blocks.IRON_ORE);
-		blocks.add(Blocks.LAPIS_ORE);
-		blocks.add(Blocks.QUARTZ_ORE);
-		blocks.add(Blocks.OBSIDIAN);
-		blocks.add(Blocks.GLOWSTONE);
-		return blocks;
-	}
+	/* TODO
+	@SubscribeEvent
+	public static void slab(HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		World world = event.getWorld();
+		BlockPos pos = event.getPos();
+		if (event.getState().getBlock() instanceof BlockSlab) {
+			Vec3d vec3d = player.getLookVec();
+			if (vec3d != null) {
+				vec3d = vec3d.addVector(player.posX, player.posY - 0.3D, player.posZ);
+				System.out.println(vec3d.x);
+				System.out.println(vec3d.y);
+				System.out.println(vec3d.z);
+				if (vec3d.y < 0.5D) {
+					world.setBlockToAir(pos);
+				}
+			}
+		}
+	}*/
 }

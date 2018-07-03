@@ -20,5 +20,6 @@ public class GPickWords {
 	public static String FIRECHANCE() { return I18n.translateToLocal("gpick.fire.chance");}
 	public static String ADFIRECHANCE() { return I18n.translateToLocal("gpick.adfire.chance");}
 	public static String SETHOME() { return I18n.translateToLocal("gpick.sethome.text");}
+	public static String THANK() { return I18n.translateToLocal("gpick.update.thanks");}
 	
 }

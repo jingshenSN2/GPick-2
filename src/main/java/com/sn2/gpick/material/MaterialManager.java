@@ -22,4 +22,5 @@ public class MaterialManager {
 	public static final ToolMaterial FLY = EnumHelper.addToolMaterial("fly", 3, 1842, 10.0F, 5.0F, 10);
 	public static final ToolMaterial OBSERVER = EnumHelper.addToolMaterial("observer", 3, 1842, 10.0F, 5.0F, 10);
 	public static final ToolMaterial SCENTER = EnumHelper.addToolMaterial("scenter", 2, 1503, 10.0F, 6.0F, 10);
+	public static final ToolMaterial SLAB = EnumHelper.addToolMaterial("slab", 2, 132, 4.0F, 1.0F, 10);
 }
