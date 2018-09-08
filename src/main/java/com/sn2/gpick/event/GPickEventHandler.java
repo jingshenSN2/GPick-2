@@ -11,6 +11,7 @@ import com.mojang.realmsclient.dto.BackupList;
 import com.sn2.gpick.GPick;
 import com.sn2.gpick.GPickWords;
 import com.sn2.gpick.config.ConfigManager;
+import com.sn2.gpick.item.BranchGPick;
 import com.sn2.gpick.item.ItemManager;
 import com.sn2.gpick.item.TrunkGPick;
 import com.sn2.gpick.item.branch.AdvancedFire;
@@ -53,7 +54,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
@@ -108,7 +111,7 @@ public class GPickEventHandler {
 			player.sendMessage(
 					new TextComponentString(GPickWords.NAME() + GPickWords.NEW1() + version + GPickWords.NEW2()));
 		} 
-		player.sendMessage(new TextComponentString(GPickWords.NAME() + GPickWords.THANK()));
+		//player.sendMessage(new TextComponentString(GPickWords.NAME() + GPickWords.THANK()));
 	}
 
 	/**
@@ -291,7 +294,6 @@ public class GPickEventHandler {
 					}
 					int totalNum = 0;
 					int totalExp = 0;
-					ItemStack drops = event.getDrops().get(0);
 					for (BlockPos pos2 : minePos) {
 						if (pos2.equals(pos))
 							continue;
@@ -303,9 +305,12 @@ public class GPickEventHandler {
 						totalExp += tempBlock.getExpDrop(state, world, pos, fortune);
 						world.destroyBlock(pos2, false);
 					}
-					for (int i = 0; i < totalNum / 64; i++)
-						event.getDrops().add(new ItemStack(drops.getItem(), totalNum, drops.getMetadata()));
-					event.getDrops().add(new ItemStack(drops.getItem(), totalNum % 64, drops.getMetadata()));
+					if (!event.getDrops().isEmpty()) {
+						ItemStack drops = event.getDrops().get(0);
+						for (int i = 0; i < totalNum / 64; i++)
+							event.getDrops().add(new ItemStack(drops.getItem(), totalNum, drops.getMetadata()));
+						event.getDrops().add(new ItemStack(drops.getItem(), totalNum % 64, drops.getMetadata()));
+					}
 					block.dropXpOnBlockBreak(world, pos, totalExp);
 					hand.setItemDamage(hand.getItemDamage() + minePos.size());
 					minePos.clear();
@@ -335,6 +340,7 @@ public class GPickEventHandler {
 			}
 		}
 	}
+	
 	/* TODO
 	@SubscribeEvent
 	public static void slab(HarvestDropsEvent event) {
